@@ -52,7 +52,7 @@ e.preventDefault();
 
 var data = new FormData(this);
 
-fetch("YOUR_APPS_SCRIPT_URL",{
+fetch("https://script.google.com/macros/s/AKfycbyP4q7X22CurWEWMdGTXrDmupAm32k2FW7uzU9adfRvUAHZ7IZY0LWgddJ2AcVJ03rRbg/exec",{
 method:"POST",
 body:data
 })
