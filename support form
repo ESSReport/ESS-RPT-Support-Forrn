@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>Submit Support Ticket</title>
+</head>
+
+<body>
+
+<h2>Support Ticket</h2>
+
+<form id="ticketForm">
+
+<label>Department</label><br>
+
+<select name="department" required>
+<option>Deposit Concern</option>
+<option>Withdrawal Issue</option>
+<option>Commission Issue</option>
+<option>Report Balance Concern</option>
+</select>
+
+<br><br>
+
+<input name="shopname" placeholder="Shop Name">
+
+<br><br>
+
+<input name="reference" placeholder="Reference">
+
+<br><br>
+
+<textarea name="concern" placeholder="Describe your concern" required></textarea>
+
+<br><br>
+
+<input type="hidden" name="chatid" id="chatid">
+
+<button type="submit">Submit Ticket</button>
+
+</form>
+
+<script>
+
+const urlParams = new URLSearchParams(window.location.search);
+
+document.getElementById("chatid").value = urlParams.get("chatid");
+
+document.getElementById("ticketForm").onsubmit = function(e){
+
+e.preventDefault();
+
+var data = new FormData(this);
+
+fetch("YOUR_APPS_SCRIPT_URL",{
+method:"POST",
+body:data
+})
+.then(()=>alert("Ticket submitted successfully"));
+
+};
+
+</script>
+
+</body>
+
+</html>
