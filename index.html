@@ -50,7 +50,7 @@
 </form>
 
 <script>
-// Get chatid from Telegram URL
+// Populate chatid from Telegram URL
 const urlParams = new URLSearchParams(window.location.search);
 document.getElementById("chatid").value = urlParams.get("chatid");
 
@@ -65,14 +65,11 @@ document.getElementById("department").addEventListener("change", function() {
         document.getElementById("shopnameDiv").classList.remove("hidden");
         document.getElementById("referenceDiv").classList.remove("hidden");
         document.getElementById("concernDiv").classList.remove("hidden");
-        document.getElementById("concern").required = true;
     } else if (dep === "Commission Issue") {
         document.getElementById("shopnameDiv").classList.remove("hidden");
         document.getElementById("concernDiv").classList.remove("hidden");
-        document.getElementById("concern").required = true;
     } else if (dep === "Report Balance Concern") {
         document.getElementById("concernDiv").classList.remove("hidden");
-        document.getElementById("concern").required = true;
     }
 });
 
@@ -80,12 +77,20 @@ document.getElementById("department").addEventListener("change", function() {
 document.getElementById("ticketForm").onsubmit = function(e) {
     e.preventDefault();
 
+    // Convert form data to query string
     const formData = new FormData(this);
-    const params = new URLSearchParams(formData).toString();
+    const params = new URLSearchParams();
+    formData.forEach((value, key) => {
+        if (value) params.append(key, value);
+    });
 
-    fetch("https://script.google.com/macros/s/AKfycbzbDmt1NkNok0xMoovDsKg4Zl-5vG8NwUU_Px-Jv6b-6vs-VQWrHNdrBam7ixO2t4iL/exec?" + params)
+    // Replace with your deployed Web App URL
+    const webAppUrl = "https://script.google.com/macros/s/AKfycbzbDmt1NkNok0xMoovDsKg4Zl-5vG8NwUU_Px-Jv6b-6vs-VQWrHNdrBam7ixO2t4iL/exec";
+
+    fetch(webAppUrl + "?" + params.toString())
     .then(response => response.text())
     .then(result => {
+        // Show confirmation
         document.body.innerHTML = "<h2>Ticket submitted successfully!</h2><p>You can now close this tab.</p>";
     })
     .catch(error => {
